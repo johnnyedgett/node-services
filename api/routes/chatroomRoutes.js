@@ -6,6 +6,6 @@ module.exports = function(app){
         .post(chatroom.create_a_chatroom)
 
     app.route('/chatroom/:chatroom')
-        .get(charoom.get_a_chatroom)
+        .get(chatroom.get_a_chatroom)
         .delete(chatroom.delete_a_chatroom);        
 };
