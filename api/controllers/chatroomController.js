@@ -17,7 +17,11 @@ exports.create_a_chatroom = function(req, res){
         if(err)
             res.send(err);
         if(chatroom != undefined){
-            res.json({message: "Chatroom already exists!"});
+            res.json({
+                      message: "Chatroom already exists!",
+                      chatroom_name:req.param('name'),
+                      chatrooms_found:chatroom
+                    });
         }
         else {
             var new_chatroom = new Chatroom(req.body);
