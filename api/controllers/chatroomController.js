@@ -4,6 +4,8 @@ var mongoose = require('mongoose'),
 
 exports.get_a_chatroom = function(req, res){
     // Find the chatroom and return the information about the chatrooom
+    // Can also do findById to search by the ID and 
+    // findOneAndUpdate to find by ID and go ahead and update that one
     Chatroom.find({}, function(err, chatroom){
         if(err)
             res.send(err);
@@ -13,13 +15,13 @@ exports.get_a_chatroom = function(req, res){
 
 exports.create_a_chatroom = function(req, res){
     // Create a chatroom using the request body if it doesn't already exist
-    Chatroom.find({name:req.param('name')}, function(err, chatroom){
+    Chatroom.find({name:req.params.name}, function(err, chatroom){
         if(err)
             res.send(err);
-        if(chatroom != undefined){
+        if(chatroom.length != 0){
             res.json({
                       message: "Chatroom already exists!",
-                      chatroom_name:req.param('name'),
+                      chatroom_name:req.params.name,
                       chatrooms_found:chatroom
                     });
         }
