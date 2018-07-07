@@ -12,12 +12,21 @@ exports.get_a_chatroom = function(req, res){
 }
 
 exports.create_a_chatroom = function(req, res){
-    // Create a chatroom using the request body
-    var new_chatroom = new Chatroom(req.body);
-    new_chatroom.save(function(err, chatroom){
+    // Create a chatroom using the request body if it doesn't already exist
+    Chatroom.find({name:req.param('name')}, function(err, chatroom){
         if(err)
             res.send(err);
-        res.json(chatroom);
+        if(chatroom != undefined){
+            res.json({message: "Chatroom already exists!"});
+        }
+        else {
+            var new_chatroom = new Chatroom(req.body);
+            new_chatroom.save(function(err, chatroom){
+                if(err)
+                    res.send(err);
+                res.json(chatroom);
+            })
+        }
     })
 }
 
